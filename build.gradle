@@ -15,6 +15,8 @@ repositories {
 }
 
 dependencies {
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
     testImplementation("org.meanbean:meanbean:$meanbeanVersion")
     testImplementation("org.testng:testng:$testngVersion")
@@ -40,59 +42,59 @@ task javadocJar(type: Jar) {
 
 
 def releaseVersion = !version.endsWith("SNAPSHOT")
-
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifactId = "$rootProject.name"
-            from components.java
-            artifact sourcesJar
-            artifact javadocJar
-            pom {
-                name = "$rootProject.name"
-                description = "Library of model classes for components"
-                url = "https://github.com/astrapi69/"+"$rootProject.name"
-                organization {
-                    name = "Alpha Ro Group UG (haftungsbeschrängt)"
-                    url = "http://www.alpharogroup.de/"
-                }
-                issueManagement {
-                    system = "GitHub"
-                    url = "https://github.com/astrapi69/"+"$rootProject.name"+"/issues"
-                }
-                licenses {
-                    license {
-                        name = "MIT License"
-                        url = "http://www.opensource.org/licenses/mit-license.php"
-                        distribution = "repo"
-                    }
-                }
-                developers {
-                    developer {
-                        id = "astrapi69"
-                        name = "Asterios Raptis"
-                    }
-                }
-                scm {
-                    connection = "scm:git:git:@github.com:astrapi69/"+"$rootProject.name"+".git"
-                    developerConnection = "scm:git:git@github.com:astrapi69/"+"$rootProject.name"+".git"
-                    url = "git:@github.com:astrapi69/"+"$rootProject.name"+".git"
-                }
-            }
-        }
-    }
-    repositories {
-        maven {
-            credentials {
-                username System.getenv("ossrhUsername") ?: project.property("ossrhUsername")
-                password System.getenv("ossrhPassword") ?: project.property("ossrhPassword")
-            }
-            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
-            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
-            url = releaseVersion ? releasesRepoUrl : snapshotsRepoUrl
-        }
-    }
-}
+//
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            artifactId = "$rootProject.name"
+//            from components.java
+//            artifact sourcesJar
+//            artifact javadocJar
+//            pom {
+//                name = "$rootProject.name"
+//                description = "Library of model classes for components"
+//                url = "https://github.com/astrapi69/"+"$rootProject.name"
+//                organization {
+//                    name = "Alpha Ro Group UG (haftungsbeschrängt)"
+//                    url = "http://www.alpharogroup.de/"
+//                }
+//                issueManagement {
+//                    system = "GitHub"
+//                    url = "https://github.com/astrapi69/"+"$rootProject.name"+"/issues"
+//                }
+//                licenses {
+//                    license {
+//                        name = "MIT License"
+//                        url = "http://www.opensource.org/licenses/mit-license.php"
+//                        distribution = "repo"
+//                    }
+//                }
+//                developers {
+//                    developer {
+//                        id = "astrapi69"
+//                        name = "Asterios Raptis"
+//                    }
+//                }
+//                scm {
+//                    connection = "scm:git:git:@github.com:astrapi69/"+"$rootProject.name"+".git"
+//                    developerConnection = "scm:git:git@github.com:astrapi69/"+"$rootProject.name"+".git"
+//                    url = "git:@github.com:astrapi69/"+"$rootProject.name"+".git"
+//                }
+//            }
+//        }
+//    }
+//    repositories {
+//        maven {
+//            credentials {
+//                username System.getenv("ossrhUsername") ?: project.property("ossrhUsername")
+//                password System.getenv("ossrhPassword") ?: project.property("ossrhPassword")
+//            }
+//            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2/"
+//            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+//            url = releaseVersion ? releasesRepoUrl : snapshotsRepoUrl
+//        }
+//    }
+//}
 
 tasks.withType(GenerateModuleMetadata) {
     enabled = false
